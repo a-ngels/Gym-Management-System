@@ -7,7 +7,8 @@ public class Gym {
    // variables
    private List<Session> sessions;
    private List<User> users;
-   private int indexLastDeleted = -1;
+   private int indexLastDeletedSessions = -1;
+   private int indexLastDeletedUsers = -1;
 
    // constructor
    public Gym() {
@@ -25,7 +26,7 @@ public class Gym {
 
    public void deleteSession(int i){
       sessions.remove(i);
-      indexLastDeleted = i;
+      indexLastDeletedSessions = i;
    }
 
    public User createUser(String first_name, String last_name, String phone_number, String email) {
@@ -34,15 +35,28 @@ public class Gym {
       return new_user;
    }
 
+   public void deleteUser(int i) {
+      users.remove(i);
+      indexLastDeletedUsers = i;
+   }
+
    public List<Session> get_sessions() {
       return sessions;
+   }
+
+   public List<User> get_users() {
+      return users;
    }
 
    public Session getLastSession(){
       return sessions.get(sessions.size()-1);
    }
 
-   public int getIndexLastDeleted(){
-      return indexLastDeleted;
+   public int getIndexLastDeletedSessions(){
+      return indexLastDeletedSessions;
+   }
+
+   public int getIndexLastDeletedUsers() {
+      return indexLastDeletedUsers;
    }
 }
