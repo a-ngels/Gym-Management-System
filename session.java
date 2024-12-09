@@ -1,8 +1,9 @@
 import java.util.List;
 
-public class session {
-   
+public class Session {
+
    // variables
+   private static int totalSessions = 0;
    private int id;
    private String name;
    private String type;
@@ -13,8 +14,8 @@ public class session {
    private double price;
    private List<String> classList;
 
-   public session(int id, String name, String type, String trainer, String location, String date, String time, double price) {
-      this.id = id;
+   public Session(String name, String type, String trainer, String location, String date, String time, double price) {
+      this.id = totalSessions;
       this.name = name;
       this.type = type;
       this.trainer = trainer;
@@ -22,6 +23,7 @@ public class session {
       this.date = date;
       this.time = time;
       this.price = price;
+      totalSessions++;
    }
 
    // getters and setters
@@ -33,11 +35,19 @@ public class session {
       classList.remove(userName);
    }
 
-  public double calculateRevenue() {
+   public double calculateRevenue() {
       return price * classList.size();
    }
 
    public int getClassSize() {
       return classList.size();
+   }
+
+   public static int getNumSessions() {
+      return totalSessions;
+   }
+
+   public String toString(){
+      return String.format("ID: %d Name: %s Type: %s Trainer: %s", id, name, type, trainer);
    }
 }

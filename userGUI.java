@@ -7,9 +7,10 @@ public class userGUI extends JFrame{
 
    // variables 
    private JButton create_btn, modify_btn, delete_btn, search_btn, view_schedule_btn, back_btn;
+   
 
    // constructor
-   public userGUI() {
+   public userGUI(Gym gym) {
 
       // create buttons and adjust sizes for gui
       set_buttons();

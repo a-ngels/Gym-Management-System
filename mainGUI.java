@@ -3,11 +3,16 @@ import javax.swing.*;
 
 public class mainGUI extends JFrame {
 
+   //gym
+   private Gym gym;
+
    // variables
    private JButton trainer_btn, user_btn;
 
    // constructor
    public mainGUI() {
+
+      gym = new Gym();
 
       // set buttons for gui
       set_buttons();
@@ -45,8 +50,8 @@ public class mainGUI extends JFrame {
    }
 
    private void add_listeners () {
-      trainer_btn.addActionListener(l -> new trainerGUI());
-      user_btn.addActionListener(l -> new userGUI());
+      trainer_btn.addActionListener(l -> new trainerGUI(gym));
+      user_btn.addActionListener(l -> new userGUI(gym));
    }
 
 }
