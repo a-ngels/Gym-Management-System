@@ -3,7 +3,7 @@ import java.util.List;
 public class Session {
 
    // variables
-   private static int totalSessions = 0;
+   private static int totalSessionsCreated = 0;
    private int id;
    private String name;
    private String type;
@@ -15,7 +15,7 @@ public class Session {
    private List<String> classList;
 
    public Session(String name, String type, String trainer, String location, String date, String time, double price) {
-      this.id = totalSessions;
+      this.id = totalSessionsCreated;
       this.name = name;
       this.type = type;
       this.trainer = trainer;
@@ -23,7 +23,7 @@ public class Session {
       this.date = date;
       this.time = time;
       this.price = price;
-      totalSessions++;
+      totalSessionsCreated++;
    }
 
    // getters and setters
@@ -43,11 +43,48 @@ public class Session {
       return classList.size();
    }
 
-   public static int getNumSessions() {
-      return totalSessions;
-   }
-
    public String toString(){
       return String.format("ID: %d Name: %s Type: %s Trainer: %s", id, name, type, trainer);
+   }
+
+   //getters
+   public static int getNumSessions() {
+      return totalSessionsCreated;
+   }
+
+   public int getId() {
+      return id;
+   }
+
+   public String getName() {
+      return name;
+   }
+
+   public String getType() {
+      return type;
+   }
+
+   public String getTrainer() {
+      return trainer;
+   }
+
+   public String getLocation() {
+      return location;
+   }
+
+   public String getDate() {
+      return date;
+   }
+
+   public String getTime() {
+      return time;
+   }
+
+   public double getPrice() {
+      return price;
+   }
+
+   public List<String> getClassList() {
+      return classList;
    }
 }

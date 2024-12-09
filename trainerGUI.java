@@ -2,36 +2,25 @@
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
 public class trainerGUI extends JFrame {
 
    // variables
-   private JButton create_btn, modify_btn, delete_btn, classlist_btn, back_btn;
+   private JButton create_btn, modify_btn, delete_btn, details_btn, back_btn;
+   private DefaultListModel<String> sessionsListModel;
    private JList<String> sessionsList;
    private JScrollPane sessionsScrollPane;
    private JPanel bottom;
    private JSplitPane main;
 
-   private String[] fitnessClasses = {
-         "Yoga",
-         "Pilates",
-         "Zumba",
-         "CrossFit",
-         "Spinning",
-         "Kickboxing",
-         "HIIT (High-Intensity Interval Training)",
-         "Barre",
-         "Aqua Aerobics",
-         "Bootcamp"
-   };
-
    // constructor
    public trainerGUI(Gym gym) {
 
       // initialize internal components
-      setComponents();
+      setComponents(gym);
 
       // set up general inforamtion
       setTitle("Gym Trainer");
@@ -48,35 +37,38 @@ public class trainerGUI extends JFrame {
          @Override
          public void windowGainedFocus(WindowEvent e) {
             System.out.println("gained focus");
-            refresh();
+            refresh(gym);
          }
 
          @Override
          public void windowLostFocus(WindowEvent e) {
-             System.out.println("lost focus");
+            System.out.println("lost focus");
          }
-     });
+      });
 
       this.setVisible(true);
    }
 
    // methods
 
-   private void setComponents() {
+   //intialize components
+   private void setComponents(Gym gym) {
       create_btn = new JButton("Create");
       modify_btn = new JButton("Modify");
       delete_btn = new JButton("Delete");
-      classlist_btn = new JButton("Class List");
+      details_btn = new JButton("Details");
       back_btn = new JButton("Back");
 
       create_btn.setPreferredSize(new Dimension(100, 75));
       modify_btn.setPreferredSize(new Dimension(100, 75));
       delete_btn.setPreferredSize(new Dimension(100, 75));
-      classlist_btn.setPreferredSize(new Dimension(100, 75));
+      details_btn.setPreferredSize(new Dimension(100, 75));
       back_btn.setPreferredSize(new Dimension(100, 75));
 
       // Create the JList
-      sessionsList = new JList<>(fitnessClasses);
+      sessionsListModel = new DefaultListModel<String>();
+      sessionsToSessionEntries(gym);
+      sessionsList = new JList<>(sessionsListModel);
       sessionsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
       // Add a scroll pane to make the list scrollable
@@ -99,8 +91,11 @@ public class trainerGUI extends JFrame {
       sessionsScrollPane.setPreferredSize(new Dimension(500, 500));
    }
 
-   private void refresh() {
+   //update each time a session is added or deleted
+   private void refresh(Gym gym) {
       System.out.println("updating");
+      if(sessionsListModel.getSize()<gym.get_sessions().size())
+         sessionsListModel.addElement(sessionToSessionEntry(gym.getLastSession()));
       sessionsScrollPane.repaint();
    }
 
@@ -109,7 +104,7 @@ public class trainerGUI extends JFrame {
       bottom.add(create_btn);
       bottom.add(modify_btn);
       bottom.add(delete_btn);
-      bottom.add(classlist_btn);
+      bottom.add(details_btn);
       bottom.add(back_btn);
       main.add(sessionsScrollPane);
       main.add(bottom);
@@ -119,12 +114,21 @@ public class trainerGUI extends JFrame {
    private void add_listeners(Gym gym) {
       back_btn.addActionListener(l -> dispose());
       create_btn.addActionListener(l -> new create_sessionGUI(gym));
+      delete_btn.addActionListener(l -> {
+         if(!sessionsList.isSelectionEmpty()){
+            gym.deleteSession(sessionsList.getSelectedIndex());
+            sessionsListModel.remove(sessionsList.getSelectedIndex());
+         }
+      });
    }
 
-   private class SessionPanel extends JPanel {
-      SessionPanel() {
+   private void sessionsToSessionEntries(Gym gym) {
+      for (Session s : gym.get_sessions())
+         sessionsListModel.addElement(sessionToSessionEntry(s));
+   }
 
-      }
+   private String sessionToSessionEntry(Session s) {
+      return String.format("%3d%12s%9s%20s%10s", s.getId(), s.getDate(), s.getTime(), s.getName(), s.getTrainer());
    }
 
 }
