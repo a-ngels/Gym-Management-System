@@ -11,7 +11,7 @@ public class create_userGUI extends JFrame {
    private static int id_count = 1;
 
    // constructor 
-   public create_userGUI() {
+   public create_userGUI(Gym gym) {
 
       // create buttons for gui
       set_buttons();
@@ -24,7 +24,7 @@ public class create_userGUI extends JFrame {
 
       // add components and listeners
       add_components();
-      add_listeners();
+      add_listeners(gym);
 
 
       this.setVisible(true);
@@ -40,6 +40,13 @@ public class create_userGUI extends JFrame {
 
       create_btn = new JButton("Create");
       back_btn = new JButton("Back");
+
+      // values for testing
+      fname_field.setText("bob");
+      lname_field.setText("Smith");
+      phone_field.setText("333");
+      email_field.setText("gmail");
+      // delete for release
    }
 
    private void add_components() {
@@ -62,12 +69,11 @@ public class create_userGUI extends JFrame {
       this.add(back_btn);
    }
 
-   private void add_listeners() {
+   private void add_listeners(Gym gym) {
       back_btn.addActionListener(l -> dispose());
-   }
-
-   private int new_session_id () {
-      return id_count++;
+      create_btn.addActionListener(l -> {
+         addSession(gym, fname_field.getText(), lname_field.getText(), phone_field.getText(), email_field.getText());
+      });
    }
 
    private void resetFields() {
@@ -75,5 +81,15 @@ public class create_userGUI extends JFrame {
       lname_field.setText("");
       phone_field.setText("");
       email_field.setText("");
+   }
+   
+   private int new_session_id () {
+      return id_count++;
+   }
+
+   private void addSession(Gym gym, String fname, String lname, String num, String email) {
+      User temp = gym.createUser(fname, lname, num, email);
+      System.out.println(temp.toString());
+      dispose();
    }
 }

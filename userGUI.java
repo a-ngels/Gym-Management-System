@@ -1,6 +1,8 @@
 
 
 import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -31,9 +33,22 @@ public class userGUI extends JFrame{
 
       // add buttons and listerners
       add_components();
-      add_listeners();
+      add_listeners(gym);
 
+      //window focus listener to update after creating new session
+      this.addWindowFocusListener(new WindowFocusListener() {
+         @Override
+         public void windowGainedFocus(WindowEvent e) {
+            System.out.println("gained focus");
+            refresh(gym);
+         }
 
+         @Override
+         public void windowLostFocus(WindowEvent e) {
+            System.out.println("lost focus");
+         }
+      });
+      
       this.setVisible(true);
    }
 
@@ -73,6 +88,14 @@ public class userGUI extends JFrame{
       usersScrollPane.setPreferredSize(new Dimension(500, 500));
    }
 
+   private void refresh (Gym gym) {
+      User u = gym.getLastUser();
+      if (usersTable.getRowCount() < gym.get_users().size()) {
+         usersTableModel.addRow(new String [] {u.getFirstName(), u.getLastName(), u.getPhoneNumber(), u.getEmail()} );
+      }
+      usersScrollPane.repaint();
+   }
+
    private void add_components() {
       bottom.add(create_btn);
       bottom.add(modify_btn);
@@ -85,17 +108,22 @@ public class userGUI extends JFrame{
       this.add(main);
    }
 
-   private void add_listeners() {
+   private void add_listeners(Gym gym) {
       back_btn.addActionListener(l -> dispose());
-      create_btn.addActionListener(l -> new create_userGUI());
+      create_btn.addActionListener(l -> new create_userGUI(gym));
+      delete_btn.addActionListener(l -> {
+         if (usersTable.getSelectedRow() != -1) {
+            gym.deleteSession(usersTable.getSelectedRow());
+            usersTableModel.removeRow(usersTable.getSelectedRow());
+         }
+      });
    }
 
    private String[][] usersToJTable(Gym gym) {
       ArrayList<String[]> temp = new ArrayList<>();
-      //for (User u : gym.get_users) {
-       //  temp.add(
-               //new String[] { String.format("%s", u.getFirstName()), u.getLastName(), u.getPhoneNumber(), u.getEmail() });
-      //}
+      for (User u : gym.get_users()) {
+         temp.add(new String[] {u.getFirstName(), u.getLastName(), u.getPhoneNumber(), u.getEmail()});
+      }
       return temp.toArray(new String[0][0]);
    }
 

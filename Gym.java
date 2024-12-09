@@ -52,6 +52,10 @@ public class Gym {
       return sessions.get(sessions.size()-1);
    }
 
+   public User getLastUser() {
+      return users.get(users.size()-1);
+   }
+
    public int getIndexLastDeletedSessions(){
       return indexLastDeletedSessions;
    }
