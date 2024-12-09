@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 import java.util.ArrayList;
+import javax.swing.table.*;
 
 import javax.swing.*;
 
@@ -10,8 +11,8 @@ public class trainerGUI extends JFrame {
 
    // variables
    private JButton create_btn, modify_btn, delete_btn, details_btn, back_btn;
-   private DefaultListModel<String> sessionsListModel;
-   private JList<String> sessionsList;
+   private DefaultTableModel sessionsTableModel;
+   private JTable sessionsTable;
    private JScrollPane sessionsScrollPane;
    private JPanel bottom;
    private JSplitPane main;
@@ -51,8 +52,9 @@ public class trainerGUI extends JFrame {
 
    // methods
 
-   //intialize components
+   // intialize components
    private void setComponents(Gym gym) {
+      // initalize buttons
       create_btn = new JButton("Create");
       modify_btn = new JButton("Modify");
       delete_btn = new JButton("Delete");
@@ -65,25 +67,19 @@ public class trainerGUI extends JFrame {
       details_btn.setPreferredSize(new Dimension(100, 75));
       back_btn.setPreferredSize(new Dimension(100, 75));
 
-      // Create the JList
-      sessionsListModel = new DefaultListModel<String>();
-      sessionsToSessionEntries(gym);
-      sessionsList = new JList<>(sessionsListModel);
-      sessionsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+      // initialize scrollpane
+      sessionsTableModel = new DefaultTableModel(sessionsToJTable(gym),
+            new String[] { "ID", "Date", "Time", "Name", "Trainer" });
+      sessionsTable = new JTable(sessionsTableModel);
+      sessionsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+      sessionsTable.getColumnModel().getColumn(0).setPreferredWidth(25);
+      sessionsTable.getColumnModel().getColumn(1).setPreferredWidth(100);
+      sessionsTable.getColumnModel().getColumn(2).setPreferredWidth(75);
+      sessionsTable.getColumnModel().getColumn(3).setPreferredWidth(200);
+      sessionsTable.getColumnModel().getColumn(4).setPreferredWidth(125);
+      sessionsScrollPane = new JScrollPane(sessionsTable);
+      sessionsTable.setRowSelectionAllowed(true);
 
-      // Add a scroll pane to make the list scrollable
-      sessionsScrollPane = new JScrollPane(sessionsList);
-
-      // Add a label to display the selected item
-      JLabel selectedLabel = new JLabel("Selected: None");
-
-      // Add a listener to capture selected items
-      sessionsList.addListSelectionListener(e -> {
-         if (!e.getValueIsAdjusting()) { // Prevent multiple events during selection
-            String selectedValue = sessionsList.getSelectedValue();
-            selectedLabel.setText("Selected: " + (selectedValue != null ? selectedValue : "None"));
-         }
-      });
       bottom = new JPanel();
       main = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 
@@ -91,11 +87,12 @@ public class trainerGUI extends JFrame {
       sessionsScrollPane.setPreferredSize(new Dimension(500, 500));
    }
 
-   //update each time a session is added or deleted
+   // update each time a session is added or deleted
    private void refresh(Gym gym) {
+      Session s = gym.getLastSession();
       System.out.println("updating");
-      if(sessionsListModel.getSize()<gym.get_sessions().size())
-         sessionsListModel.addElement(sessionToSessionEntry(gym.getLastSession()));
+      if (sessionsTable.getRowCount() < gym.get_sessions().size())
+         sessionsTableModel.addRow(new String[] { String.format("%d", s.getId()), s.getDate(), s.getTime(), s.getName(), s.getTrainer() });
       sessionsScrollPane.repaint();
    }
 
@@ -115,20 +112,20 @@ public class trainerGUI extends JFrame {
       back_btn.addActionListener(l -> dispose());
       create_btn.addActionListener(l -> new create_sessionGUI(gym));
       delete_btn.addActionListener(l -> {
-         if(!sessionsList.isSelectionEmpty()){
-            gym.deleteSession(sessionsList.getSelectedIndex());
-            sessionsListModel.remove(sessionsList.getSelectedIndex());
+         if (sessionsTable.getSelectedRow() != -1) {
+            gym.deleteSession(sessionsTable.getSelectedRow());
+            sessionsTableModel.removeRow(sessionsTable.getSelectedRow());
          }
       });
    }
 
-   private void sessionsToSessionEntries(Gym gym) {
-      for (Session s : gym.get_sessions())
-         sessionsListModel.addElement(sessionToSessionEntry(s));
-   }
-
-   private String sessionToSessionEntry(Session s) {
-      return String.format("%3d%12s%9s%20s%10s", s.getId(), s.getDate(), s.getTime(), s.getName(), s.getTrainer());
+   private String[][] sessionsToJTable(Gym gym) {
+      ArrayList<String[]> temp = new ArrayList<>();
+      for (Session s : gym.get_sessions()) {
+         temp.add(
+               new String[] { String.format("%d", s.getId()), s.getDate(), s.getTime(), s.getName(), s.getTrainer() });
+      }
+      return temp.toArray(new String[0][0]);
    }
 
 }
