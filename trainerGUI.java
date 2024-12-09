@@ -34,6 +34,7 @@ public class trainerGUI extends JFrame {
       // add buttons and event listeners to frame
       add_components();
       add_listeners(gym);
+      //window focus listener to update after creating new session
       this.addWindowFocusListener(new WindowFocusListener() {
          @Override
          public void windowGainedFocus(WindowEvent e) {
@@ -67,11 +68,12 @@ public class trainerGUI extends JFrame {
       details_btn.setPreferredSize(new Dimension(100, 75));
       back_btn.setPreferredSize(new Dimension(100, 75));
 
-      // initialize scrollpane
+      // initialize table and scrollpane
       sessionsTableModel = new DefaultTableModel(sessionsToJTable(gym),
             new String[] { "ID", "Date", "Time", "Name", "Trainer" });
       sessionsTable = new JTable(sessionsTableModel);
       sessionsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+      //column widths
       sessionsTable.getColumnModel().getColumn(0).setPreferredWidth(25);
       sessionsTable.getColumnModel().getColumn(1).setPreferredWidth(100);
       sessionsTable.getColumnModel().getColumn(2).setPreferredWidth(75);
@@ -97,7 +99,6 @@ public class trainerGUI extends JFrame {
    }
 
    private void add_components() {
-
       bottom.add(create_btn);
       bottom.add(modify_btn);
       bottom.add(delete_btn);
