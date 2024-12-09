@@ -96,7 +96,7 @@ public class create_sessionGUI extends JFrame {
       date_field.setText("");
       time_field.setText("");
       price_field.setText("");
-  }
+   }
 
    
    

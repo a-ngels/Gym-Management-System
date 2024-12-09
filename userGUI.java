@@ -58,6 +58,7 @@ public class userGUI extends JFrame{
 
    private void add_listeners() {
       back_btn.addActionListener(l -> dispose());
+      create_btn.addActionListener(l -> new create_userGUI());
    }
 
    
