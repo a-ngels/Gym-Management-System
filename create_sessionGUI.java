@@ -93,6 +93,7 @@ public class create_sessionGUI extends JFrame {
 
    private void add_listeners(Gym gym) {
       back_btn.addActionListener(l -> dispose());
+      
       add_session_btn.addActionListener(l -> {
          addSession(gym, name_field.getText(), trainer_field.getText(), (String) type_field.getSelectedItem(),
                location_field.getText(), date_field.getText(),
@@ -101,18 +102,18 @@ public class create_sessionGUI extends JFrame {
 
    }
 
-   private int new_session_id() {
-      return id_count++;
-   }
+   //private int new_session_id() {
+      //return id_count++;
+   //}
 
-   private void reset_fields() {
-      name_field.setText("");
-      trainer_field.setText("");
-      location_field.setText("");
-      date_field.setText("");
-      time_field.setText("");
-      price_field.setText("");
-   }
+   //private void reset_fields() {
+      //name_field.setText("");
+      //trainer_field.setText("");
+      //location_field.setText("");
+      //date_field.setText("");
+      //time_field.setText("");
+      //price_field.setText("");
+   //}
 
    private void addSession(Gym gym, String name, String trainer, String type, String location, String date, String time,
          double price) {

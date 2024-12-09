@@ -3,9 +3,8 @@ import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 import java.util.ArrayList;
-import javax.swing.table.*;
-
 import javax.swing.*;
+import javax.swing.table.*;
 
 public class trainerGUI extends JFrame {
 
