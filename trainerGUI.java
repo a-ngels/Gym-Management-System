@@ -6,22 +6,18 @@ import javax.swing.*;
 public class trainerGUI extends JFrame{
 
    // variables
-   private JButton create_btn;
-   private JButton modify_btn;
-   private JButton delete_btn;
-   private JButton classlist_btn;
-   private JButton back_btn;
+   private JButton create_btn, modify_btn, delete_btn, classlist_btn, back_btn;
 
    // constructor
    public trainerGUI() {
 
-      // create buttons and adjust sizes
+      // create buttons and adjust sizes for gui 
       set_buttons();
 
       // set up general inforamtion
       setTitle("Gym Trainer");
       setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-      setSize(500, 300);
+      setMinimumSize(new Dimension(500, 300));
 
       // format frame 
       this.setLayout(new FlowLayout());
@@ -59,6 +55,7 @@ public class trainerGUI extends JFrame{
  
    private void add_listeners() {
       back_btn.addActionListener(l -> dispose());
+      create_btn.addActionListener(l ->new create_sessionGUI());
    }
 
 }

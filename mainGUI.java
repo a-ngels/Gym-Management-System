@@ -4,30 +4,49 @@ import javax.swing.*;
 public class mainGUI extends JFrame {
 
    // variables
-   private JButton b1;
-   private JButton b2;
+   private JButton trainer_btn, user_btn;
 
+   // constructor
    public mainGUI() {
 
-      // declare variables
-      b1 = new JButton("Gym Trainer");
-      b2 = new JButton("J Gym User");
+      // set buttons for gui
+      set_buttons();
 
       // set up general information
       setTitle("Gym Management System");
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      setMinimumSize(new Dimension(500, 300));
 
-      setSize(500, 300);
+      // format frame 
+      this.setLayout(new FlowLayout());     
 
-      b1.setPreferredSize(new Dimension(175, 75));
-      b2.setPreferredSize(new Dimension(175, 75));
-      this.setLayout(new FlowLayout());
-      this.add(b1);
-      this.add(b2);
-      
+      // set buttons and listeners
+      add_components();
+      add_listeners();
 
 
 
       this.setVisible(true);
    }
+
+
+   // methods
+   private void set_buttons () {
+      trainer_btn = new JButton("Gym Trainer");
+      user_btn = new JButton("Gym User");
+
+      trainer_btn.setPreferredSize(new Dimension(175, 75));
+      user_btn.setPreferredSize(new Dimension(175, 75));
+   }
+
+   private void add_components() {
+      this.add(trainer_btn);
+      this.add(user_btn);
+   }
+
+   private void add_listeners () {
+      trainer_btn.addActionListener(l -> new trainerGUI());
+      user_btn.addActionListener(l -> new userGUI());
+   }
+
 }

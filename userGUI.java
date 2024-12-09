@@ -6,23 +6,18 @@ import javax.swing.*;
 public class userGUI extends JFrame{
 
    // variables 
-   private JButton create_btn;
-   private JButton modify_btn;
-   private JButton delete_btn;
-   private JButton search_btn;
-   private JButton view_schedule_btn;
-   private JButton back_btn;
+   private JButton create_btn, modify_btn, delete_btn, search_btn, view_schedule_btn, back_btn;
 
    // constructor
    public userGUI() {
 
-      // create buttons and adjust sizes
+      // create buttons and adjust sizes for gui
       set_buttons();
 
       // set up general inforamtion
       setTitle("Gym User");
       setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-      setSize(500, 300);
+      setMinimumSize(new Dimension(500, 300));
 
       // format frame 
       this.setLayout(new FlowLayout());
