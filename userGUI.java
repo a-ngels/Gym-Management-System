@@ -2,7 +2,6 @@
 
 import java.awt.*;
 import java.util.ArrayList;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,7 +24,7 @@ public class userGUI extends JFrame{
       // set up general inforamtion
       setTitle("Gym User");
       setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-      setMinimumSize(new Dimension(500, 300));
+      setMinimumSize(new Dimension(650, 650));
 
       // format frame 
       this.setLayout(new FlowLayout());
@@ -55,16 +54,35 @@ public class userGUI extends JFrame{
       back_btn.setPreferredSize(new Dimension(100, 75));
 
       // initialize table and scrollpane
-      usersTableModel = new DefaultTableModel()
+      usersTableModel = new DefaultTableModel(usersToJTable(gym), 
+            new String[] { "First Name", "Last Name", "Phone Number", "Email"});
+      usersTable = new JTable(usersTableModel);
+      usersTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+      //column widths
+      usersTable.getColumnModel().getColumn(0).setPreferredWidth(25);
+      usersTable.getColumnModel().getColumn(1).setPreferredWidth(25);
+      usersTable.getColumnModel().getColumn(2).setPreferredWidth(50);
+      usersTable.getColumnModel().getColumn(3).setPreferredWidth(150);
+      usersScrollPane = new JScrollPane(usersTable);
+      usersTable.setRowSelectionAllowed(true);
+      bottom = new JPanel();
+      main = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+
+      // create users box
+      usersScrollPane.setPreferredSize(new Dimension(500, 500));
    }
 
    private void add_components() {
-      this.add(create_btn);
-      this.add(modify_btn);
-      this.add(delete_btn);
-      this.add(search_btn);
-      this.add(view_schedule_btn);
-      this.add(back_btn);
+      bottom.add(create_btn);
+      bottom.add(modify_btn);
+      bottom.add(delete_btn);
+      bottom.add(search_btn);
+      bottom.add(view_schedule_btn);
+      bottom.add(back_btn);
+      main.add(usersScrollPane);
+      main.add(bottom);
+      this.add(main);
    }
 
    private void add_listeners() {
@@ -74,10 +92,10 @@ public class userGUI extends JFrame{
 
    private String[][] usersToJTable(Gym gym) {
       ArrayList<String[]> temp = new ArrayList<>();
-      for (User u : gym.get_users()) {
-         temp.add(
-               new String[] { String.format("%d", s.getId()), s.getDate(), s.getTime(), s.getName(), s.getTrainer() });
-      }
+      //for (User u : gym.get_users) {
+       //  temp.add(
+               //new String[] { String.format("%s", u.getFirstName()), u.getLastName(), u.getPhoneNumber(), u.getEmail() });
+      //}
       return temp.toArray(new String[0][0]);
    }
 
