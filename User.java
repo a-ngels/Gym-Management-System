@@ -2,7 +2,9 @@ public class User {
 
     // fields
     private static int totalUsers = 0;
+    private static int idGenerator = 0;
     private String first_name, last_name, phone_number, email;
+    private int id = 0;
 
     public User(String first_name, String last_name, String phone_number, String email) {
         this.first_name = first_name;
@@ -10,6 +12,8 @@ public class User {
         this.phone_number = phone_number;
         this.email = email;
         totalUsers++;
+        idGenerator++;
+        this.id = idGenerator;
     }
 
     // getters
@@ -35,5 +39,8 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+    public int getID() {
+        return id;
     }
 }
