@@ -70,15 +70,16 @@ public class userGUI extends JFrame{
 
       // initialize table and scrollpane
       usersTableModel = new DefaultTableModel(usersToJTable(gym), 
-            new String[] { "First Name", "Last Name", "Phone Number", "Email"});
+            new String[] { "Id", "First Name", "Last Name", "Phone Number", "Email"});
       usersTable = new JTable(usersTableModel);
       usersTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
       //column widths
-      usersTable.getColumnModel().getColumn(0).setPreferredWidth(25);
+      usersTable.getColumnModel().getColumn(0).setPreferredWidth(10);
       usersTable.getColumnModel().getColumn(1).setPreferredWidth(25);
-      usersTable.getColumnModel().getColumn(2).setPreferredWidth(50);
-      usersTable.getColumnModel().getColumn(3).setPreferredWidth(150);
+      usersTable.getColumnModel().getColumn(2).setPreferredWidth(25);
+      usersTable.getColumnModel().getColumn(3).setPreferredWidth(50);
+      usersTable.getColumnModel().getColumn(4).setPreferredWidth(140);
       usersScrollPane = new JScrollPane(usersTable);
       usersTable.setRowSelectionAllowed(true);
       bottom = new JPanel();
@@ -91,7 +92,7 @@ public class userGUI extends JFrame{
    private void refresh (Gym gym) {
       User u = gym.getLastUser();
       if (usersTable.getRowCount() < gym.get_users().size()) {
-         usersTableModel.addRow(new String [] {u.getFirstName(), u.getLastName(), u.getPhoneNumber(), u.getEmail()} );
+         usersTableModel.addRow(new String [] {String.format("%d", u.getID()), u.getFirstName(), u.getLastName(), u.getPhoneNumber(), u.getEmail()} );
       }
       usersScrollPane.repaint();
    }
@@ -113,8 +114,11 @@ public class userGUI extends JFrame{
       create_btn.addActionListener(l -> new create_userGUI(gym));
       delete_btn.addActionListener(l -> {
          if (usersTable.getSelectedRow() != -1) {
-            gym.deleteSession(usersTable.getSelectedRow());
+            gym.deleteUser(usersTable.getSelectedRow());
             usersTableModel.removeRow(usersTable.getSelectedRow());
+            refresh(gym);
+         } else {
+            JOptionPane.showMessageDialog(this, "Please select a user to view their sessions.");
          }
       });
    }
@@ -122,7 +126,7 @@ public class userGUI extends JFrame{
    private String[][] usersToJTable(Gym gym) {
       ArrayList<String[]> temp = new ArrayList<>();
       for (User u : gym.get_users()) {
-         temp.add(new String[] {u.getFirstName(), u.getLastName(), u.getPhoneNumber(), u.getEmail()});
+         temp.add(new String[] {String.format("%d", u.getID()), u.getFirstName(), u.getLastName(), u.getPhoneNumber(), u.getEmail()});
       }
       return temp.toArray(new String[0][0]);
    }
