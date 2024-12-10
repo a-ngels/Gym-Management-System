@@ -29,6 +29,25 @@ public class Gym {
       indexLastDeletedSessions = i;
    }
 
+   // returns 0 if success, -1 if session not found
+   public int setSession(int id, String name, String trainer, String type, String location, String date, String time,
+         double price) {
+      for (int i = 0; i < sessions.size(); i++) {
+         if (sessions.get(i).getId() == id) {
+            sessions.get(i).setName(name);
+            sessions.get(i).setTrainer(trainer);
+            sessions.get(i).setType(type);
+            sessions.get(i).setLocation(location);
+            sessions.get(i).setDate(date);
+            sessions.get(i).setTime(time);
+            sessions.get(i).setPrice(price);
+            System.out.println(sessions.get(i).toString());
+            return 0;
+         }
+      }
+      return -1;
+   }
+
    public User createUser(String first_name, String last_name, String phone_number, String email) {
       User new_user = new User(first_name, last_name, phone_number, email);
       users.add(new_user);
