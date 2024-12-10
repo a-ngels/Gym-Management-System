@@ -73,5 +73,6 @@ public class detailsGUI extends JFrame {
         main.add(top);
         main.add(classScrollPane);
         this.add(main);
+        main.setEnabled(false);
     }
 }

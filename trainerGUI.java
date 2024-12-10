@@ -111,6 +111,7 @@ public class trainerGUI extends JFrame {
       main.add(sessionsScrollPane);
       main.add(bottom);
       this.add(main);
+      main.setEnabled(false);
    }
 
    private void add_listeners(Gym gym) {

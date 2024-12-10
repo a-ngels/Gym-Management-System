@@ -110,6 +110,7 @@ public class userGUI extends JFrame{
       main.add(usersScrollPane);
       main.add(bottom);
       this.add(main);
+      main.setEnabled(false);
    }
 
    private void add_listeners(Gym gym) {

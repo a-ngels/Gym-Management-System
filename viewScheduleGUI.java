@@ -29,7 +29,6 @@ public class viewScheduleGUI extends JFrame {
       add_components();
       add_listeners(user);
       
-      
       this.setVisible(true);
    }
 
@@ -67,6 +66,7 @@ public class viewScheduleGUI extends JFrame {
       main.add(sessionsScrollPane);
       main.add(bottom);
       this.add(main);
+      main.setEnabled(false);
    }
    
    private void add_listeners(User user) {
