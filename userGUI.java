@@ -90,9 +90,12 @@ public class userGUI extends JFrame{
    }
 
    private void refresh (Gym gym) {
-      User u = gym.getLastUser();
-      if (usersTable.getRowCount() < gym.get_users().size()) {
-         usersTableModel.addRow(new String [] {String.format("%d", u.getID()), u.getFirstName(), u.getLastName(), u.getPhoneNumber(), u.getEmail()} );
+      try {
+         User u = gym.getLastUser();
+         if (usersTable.getRowCount() < gym.get_users().size()) {
+            usersTableModel.addRow(new String [] {String.format("%d", u.getID()), u.getFirstName(), u.getLastName(), u.getPhoneNumber(), u.getEmail()} );
+         }
+      } catch (Exception e) {
       }
       usersScrollPane.repaint();
    }
