@@ -72,7 +72,7 @@ public class create_userGUI extends JFrame {
    private void add_listeners(Gym gym) {
       back_btn.addActionListener(l -> dispose());
       create_btn.addActionListener(l -> {
-         addSession(gym, fname_field.getText(), lname_field.getText(), phone_field.getText(), email_field.getText());
+         addUser(gym, fname_field.getText(), lname_field.getText(), phone_field.getText(), email_field.getText());
       });
    }
 
@@ -87,7 +87,7 @@ public class create_userGUI extends JFrame {
       return id_count++;
    }
 
-   private void addSession(Gym gym, String fname, String lname, String num, String email) {
+   private void addUser(Gym gym, String fname, String lname, String num, String email) {
       User temp = gym.createUser(fname, lname, num, email);
       System.out.println(temp.toString());
       dispose();
