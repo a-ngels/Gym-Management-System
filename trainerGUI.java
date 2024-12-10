@@ -69,7 +69,13 @@ public class trainerGUI extends JFrame {
 
       // initialize table and scrollpane
       sessionsTableModel = new DefaultTableModel(sessionsToJTable(gym),
-            new String[] { "ID", "Date", "Time", "Name", "Trainer" });
+            new String[] { "ID", "Date", "Time", "Name", "Trainer" }) {
+         @Override
+         public boolean isCellEditable(int row, int column) {
+            // all cells false
+            return false;
+         }
+      };
       sessionsTable = new JTable(sessionsTableModel);
       sessionsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
       // column widths
@@ -80,6 +86,7 @@ public class trainerGUI extends JFrame {
       sessionsTable.getColumnModel().getColumn(4).setPreferredWidth(125);
       sessionsScrollPane = new JScrollPane(sessionsTable);
       sessionsTable.setRowSelectionAllowed(true);
+      sessionsTable.getTableHeader().setReorderingAllowed(false);
 
       bottom = new JPanel();
       main = new JSplitPane(JSplitPane.VERTICAL_SPLIT);

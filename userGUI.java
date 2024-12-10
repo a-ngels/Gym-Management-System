@@ -1,5 +1,4 @@
 
-
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
@@ -7,9 +6,9 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-public class userGUI extends JFrame{
+public class userGUI extends JFrame {
 
-   // variables 
+   // variables
    private JButton create_btn, modify_btn, delete_btn, search_btn, view_schedule_btn, back_btn;
    private DefaultTableModel usersTableModel;
    private JTable usersTable;
@@ -28,14 +27,14 @@ public class userGUI extends JFrame{
       setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
       setMinimumSize(new Dimension(650, 650));
 
-      // format frame 
+      // format frame
       this.setLayout(new FlowLayout());
 
       // add buttons and listerners
       add_components();
       add_listeners(gym);
 
-      //window focus listener to update after creating new session
+      // window focus listener to update after creating new session
       this.addWindowFocusListener(new WindowFocusListener() {
          @Override
          public void windowGainedFocus(WindowEvent e) {
@@ -48,7 +47,7 @@ public class userGUI extends JFrame{
             System.out.println("lost focus");
          }
       });
-      
+
       this.setVisible(true);
    }
 
@@ -69,12 +68,18 @@ public class userGUI extends JFrame{
       back_btn.setPreferredSize(new Dimension(100, 75));
 
       // initialize table and scrollpane
-      usersTableModel = new DefaultTableModel(usersToJTable(gym), 
-            new String[] { "Id", "First Name", "Last Name", "Phone Number", "Email"});
+      usersTableModel = new DefaultTableModel(usersToJTable(gym),
+            new String[] { "Id", "First Name", "Last Name", "Phone Number", "Email" }) {
+         @Override
+         public boolean isCellEditable(int row, int column) {
+            // all cells false
+            return false;
+         }
+      };
       usersTable = new JTable(usersTableModel);
       usersTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-      //column widths
+      // column widths
       usersTable.getColumnModel().getColumn(0).setPreferredWidth(10);
       usersTable.getColumnModel().getColumn(1).setPreferredWidth(25);
       usersTable.getColumnModel().getColumn(2).setPreferredWidth(25);
@@ -82,6 +87,7 @@ public class userGUI extends JFrame{
       usersTable.getColumnModel().getColumn(4).setPreferredWidth(140);
       usersScrollPane = new JScrollPane(usersTable);
       usersTable.setRowSelectionAllowed(true);
+      usersTable.getTableHeader().setReorderingAllowed(false);
       bottom = new JPanel();
       main = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 
@@ -89,11 +95,12 @@ public class userGUI extends JFrame{
       usersScrollPane.setPreferredSize(new Dimension(500, 500));
    }
 
-   private void refresh (Gym gym) {
+   private void refresh(Gym gym) {
       try {
          User u = gym.getLastUser();
          if (usersTable.getRowCount() < gym.get_users().size()) {
-            usersTableModel.addRow(new String [] {String.format("%d", u.getID()), u.getFirstName(), u.getLastName(), u.getPhoneNumber(), u.getEmail()} );
+            usersTableModel.addRow(new String[] { String.format("%d", u.getID()), u.getFirstName(), u.getLastName(),
+                  u.getPhoneNumber(), u.getEmail() });
          }
       } catch (Exception e) {
       }
@@ -135,7 +142,7 @@ public class userGUI extends JFrame{
                if (u.getID() == userId) {
                   selectedUser = u;
                   new viewScheduleGUI(selectedUser);
-                  break; 
+                  break;
                }
             }
 
@@ -165,10 +172,10 @@ public class userGUI extends JFrame{
    private String[][] usersToJTable(Gym gym) {
       ArrayList<String[]> temp = new ArrayList<>();
       for (User u : gym.get_users()) {
-         temp.add(new String[] {String.format("%d", u.getID()), u.getFirstName(), u.getLastName(), u.getPhoneNumber(), u.getEmail()});
+         temp.add(new String[] { String.format("%d", u.getID()), u.getFirstName(), u.getLastName(), u.getPhoneNumber(),
+               u.getEmail() });
       }
       return temp.toArray(new String[0][0]);
    }
 
-   
 }
