@@ -50,15 +50,15 @@ public class viewScheduleGUI extends JFrame {
       sessionsTable.getColumnModel().getColumn(0).setPreferredWidth(25);
       sessionsTable.getColumnModel().getColumn(1).setPreferredWidth(100);
       sessionsTable.getColumnModel().getColumn(2).setPreferredWidth(75);
-      sessionsTable.getColumnModel().getColumn(3).setPreferredWidth(200);
-      sessionsTable.getColumnModel().getColumn(4).setPreferredWidth(125);
-      sessionsTable.getColumnModel().getColumn(5).setPreferredWidth(20);
+      sessionsTable.getColumnModel().getColumn(3).setPreferredWidth(120);
+      sessionsTable.getColumnModel().getColumn(4).setPreferredWidth(120);
+      sessionsTable.getColumnModel().getColumn(5).setPreferredWidth(25);
 
       sessionsScrollPane = new JScrollPane(sessionsTable);
       sessionsTable.setRowSelectionAllowed(true);
       bottom = new JPanel();
       main = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-      sessionsScrollPane.setPreferredSize(new Dimension(500, 500));
+      sessionsScrollPane.setPreferredSize(new Dimension(600, 500));
    }
 
    private void add_components() {
