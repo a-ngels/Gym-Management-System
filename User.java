@@ -25,7 +25,10 @@ public class User {
         return class_list;
     }
 
-    // getters
+    public void addToList(Session s) {
+        class_list.add(s);
+    }
+
     public static int getNumUsers() {
         return totalUsers;
     }
@@ -51,5 +54,14 @@ public class User {
     }
     public int getID() {
         return id;
+    }
+
+    public boolean alreadyScheduled(Session session) {
+        for (Session s : class_list) {
+            if (s.getId() == session.getId()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

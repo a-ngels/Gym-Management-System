@@ -142,6 +142,23 @@ public class userGUI extends JFrame{
             JOptionPane.showMessageDialog(this, "Please select a user to view their schedule.");
          }
       });
+
+      search_btn.addActionListener(l -> {
+         int selectedRow = usersTable.getSelectedRow();
+         if (selectedRow != -1) {
+            User selectedUser;
+            int userId = Integer.parseInt((String) usersTable.getValueAt(selectedRow, 0));
+            for (User u : gym.get_users()) {
+               if (u.getID() == userId) {
+                  selectedUser = u;
+                  new searchSessionsGUI(selectedUser, gym);
+                  break;
+               }
+            }
+         } else {
+            JOptionPane.showMessageDialog(this, "Please select a user to search sessions.");
+         }
+      });
    }
 
    private String[][] usersToJTable(Gym gym) {

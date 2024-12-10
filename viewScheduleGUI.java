@@ -99,7 +99,7 @@ public class viewScheduleGUI extends JFrame {
          sessionsTableModel.addRow(new String[] {
             String.format("%d", s.getId()), s.getDate(), s.getTime(), s.getName(), s.getTrainer(), String.format("%.2f", s.getPrice())});
       }
-  }
+   }
   
 
 }
