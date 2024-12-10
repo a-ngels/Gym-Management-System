@@ -90,11 +90,15 @@ public class trainerGUI extends JFrame {
 
    // update each time a session is added or deleted
    private void refresh(Gym gym) {
-      Session s = gym.getLastSession();
-      System.out.println("updating");
-      if (sessionsTable.getRowCount() < gym.get_sessions().size())
-         sessionsTableModel.addRow(
-               new String[] { String.format("%d", s.getId()), s.getDate(), s.getTime(), s.getName(), s.getTrainer() });
+      try {
+         Session s = gym.getLastSession();
+         System.out.println("updating");
+         if (sessionsTable.getRowCount() < gym.get_sessions().size())
+            sessionsTableModel.addRow(
+                  new String[] { String.format("%d", s.getId()), s.getDate(), s.getTime(), s.getName(),
+                        s.getTrainer() });
+      } catch (Exception e) {
+      }
       sessionsScrollPane.repaint();
    }
 
@@ -111,7 +115,7 @@ public class trainerGUI extends JFrame {
 
    private void add_listeners(Gym gym) {
       back_btn.addActionListener(l -> dispose());
-      create_btn.addActionListener(l -> new create_sessionGUI(gym));
+      create_btn.addActionListener(l -> new createModifySessionGUI(gym, null));
       delete_btn.addActionListener(l -> {
          if (sessionsTable.getSelectedRow() != -1) {
             gym.deleteSession(sessionsTable.getSelectedRow());
@@ -123,6 +127,13 @@ public class trainerGUI extends JFrame {
             new detailsGUI(
                   gym.getSession(
                         Integer.parseInt((String) sessionsTableModel.getValueAt(sessionsTable.getSelectedRow(), 0))));
+      });
+      modify_btn.addActionListener(l -> {
+         if (sessionsTable.getSelectedRow() != -1) {
+            System.out.println(sessionsTableModel.getValueAt(sessionsTable.getSelectedRow(), 0).getClass());
+            new createModifySessionGUI(gym, gym.getSession(
+                  Integer.parseInt((String) sessionsTableModel.getValueAt(sessionsTable.getSelectedRow(), 0))));
+         }
       });
    }
 

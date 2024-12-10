@@ -48,7 +48,7 @@ public class Session {
       return String.format("ID: %d Name: %s Type: %s Trainer: %s", id, name, type, trainer);
    }
 
-   // getters
+   // getters and setters
    public static int getNumSessions() {
       return totalSessionsCreated;
    }
@@ -87,5 +87,33 @@ public class Session {
 
    public List<String> getClassList() {
       return classList;
+   }
+
+   public void setName(String name) {
+      this.name = name;
+   }
+
+   public void setType(String type) {
+      this.type = type;
+   }
+
+   public void setTrainer(String trainer) {
+      this.trainer = trainer;
+   }
+
+   public void setLocation(String location) {
+      this.location = location;
+   }
+
+   public void setDate(String date) {
+      this.date = date;
+   }
+
+   public void setTime(String time) {
+      this.time = time;
+   }
+
+   public void setPrice(double price) {
+      this.price = price;
    }
 }
