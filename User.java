@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.List;
 
 public class User {
 
@@ -9,7 +8,7 @@ public class User {
     private String first_name, last_name, phone_number, email;
     private int id = 0;
 
-    private List<Session> class_list;
+    private ArrayList<Session> class_list;
 
     public User(String first_name, String last_name, String phone_number, String email) {
         this.first_name = first_name;
@@ -22,7 +21,7 @@ public class User {
         this.class_list = new ArrayList<>();
     }
 
-    public List<Session> getClassList() {
+    public ArrayList<Session> getClassList() {
         return class_list;
     }
 

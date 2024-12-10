@@ -1,5 +1,6 @@
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -75,22 +76,30 @@ public class viewScheduleGUI extends JFrame {
          int selectedRow = sessionsTable.getSelectedRow();
          if (selectedRow != -1) {
             int sessionId = Integer.parseInt((String) sessionsTable.getValueAt(selectedRow, 0));
-            user.getClassList().removeIf(session -> session.equals(String.valueOf(sessionId)));
+            user.getClassList().removeIf(session -> session.getId() == sessionId);
             sessionsTableModel.removeRow(selectedRow);
+            refresh(user);
          } else {
             JOptionPane.showMessageDialog(this, "Please select a session to delete.");
          }
       });
    }
 
-   private String [][] sessionsToJTable (User user) {
-
-      java.util.List<Session> sessions = user.getClassList(); 
+   private String[][] sessionsToJTable(User user) {
+      ArrayList<String[]> temp = new ArrayList<>();
+      for (Session s : user.getClassList()) {
+         temp.add(new String[] {String.format("%d", s.getId()), s.getDate(), s.getTime(), s.getName(), s.getTrainer(), String.format("%.2f", s.getPrice())});
+      }
+      return temp.toArray(new String[0][0]);
    }
 
-
-
-
-
+   private void refresh(User user) {
+      sessionsTableModel.setRowCount(0);
+      for (Session s : user.getClassList()) {
+         sessionsTableModel.addRow(new String[] {
+            String.format("%d", s.getId()), s.getDate(), s.getTime(), s.getName(), s.getTrainer(), String.format("%.2f", s.getPrice())});
+      }
+  }
+  
 
 }
