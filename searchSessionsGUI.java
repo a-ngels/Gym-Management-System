@@ -1,4 +1,5 @@
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class searchSessionsGUI extends JFrame {
       // set up general inforamtion
       setTitle("Search and Add Sessions for " + user.getFirstName() + " " + user.getLastName());
       setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-      setMinimumSize(new Dimension(650, 650));
+      setMinimumSize(new Dimension(650, 700));
 
       // format frame 
       this.setLayout(new FlowLayout());
@@ -71,19 +72,23 @@ public class searchSessionsGUI extends JFrame {
    }
 
    private void add_components() {
-      searchPanel.add(new JLabel("Search:"));
+
+      searchPanel.add(new JLabel("Search by Name:"));
       searchPanel.add(searchField);
       searchPanel.add(search_btn);
-
       bottom.add(addSession_btn);
       bottom.add(back_btn);
 
-      main.add(searchPanel);
-      main.add(sessionsScrollPane);
-      main.add(bottom);
-
+      JPanel tableAndButtonsPanel = new JPanel(new BorderLayout());
+      tableAndButtonsPanel.add(sessionsScrollPane, BorderLayout.CENTER);
+      tableAndButtonsPanel.add(bottom, BorderLayout.SOUTH); 
+      main.setEnabled(false);
+      
+      main.setTopComponent(searchPanel);
+      main.setBottomComponent(tableAndButtonsPanel);
+  
       this.add(main);
-   }
+  }
 
    private void add_listeners(User user, Gym gym) {
 
@@ -125,11 +130,11 @@ public class searchSessionsGUI extends JFrame {
    }
 
    private void executeSearch(Gym gym, String search) {
-      if (search.isEmpty()) {
-         return;
-      }
       sessionsTableModel.setRowCount(0);
       for (Session s : gym.get_sessions()) {
+         if (search.isEmpty()) {
+            sessionsTableModel.addRow(new String[] {String.format("%d", s.getId()), s.getDate(), s.getTime(), s.getName(), s.getTrainer(), String.format("%.2f", s.getPrice())});
+         }
          if (s.getName().toLowerCase().contains(search.toLowerCase())) {
             sessionsTableModel.addRow(new String[] {String.format("%d", s.getId()), s.getDate(), s.getTime(), s.getName(), s.getTrainer(), String.format("%.2f", s.getPrice())});
          }
