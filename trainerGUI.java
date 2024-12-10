@@ -121,19 +121,27 @@ public class trainerGUI extends JFrame {
          if (sessionsTable.getSelectedRow() != -1) {
             gym.deleteSession(sessionsTable.getSelectedRow());
             sessionsTableModel.removeRow(sessionsTable.getSelectedRow());
+         } else {
+            JOptionPane.showMessageDialog(this, "Please select a session to delete");
          }
+
       });
       details_btn.addActionListener(l -> {
-         if (sessionsTable.getSelectedRow() != -1)
+         if (sessionsTable.getSelectedRow() != -1) {
             new detailsGUI(
                   gym.getSession(
                         Integer.parseInt((String) sessionsTableModel.getValueAt(sessionsTable.getSelectedRow(), 0))));
+         } else {
+            JOptionPane.showMessageDialog(this, "Please select a session to view its details");
+         }
       });
       modify_btn.addActionListener(l -> {
          if (sessionsTable.getSelectedRow() != -1) {
             System.out.println(sessionsTableModel.getValueAt(sessionsTable.getSelectedRow(), 0).getClass());
             new createModifySessionGUI(gym, gym.getSession(
                   Integer.parseInt((String) sessionsTableModel.getValueAt(sessionsTable.getSelectedRow(), 0))));
+         } else {
+            JOptionPane.showMessageDialog(this, "Please select a session to modify");
          }
       });
    }
