@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.ArrayList;
 
 public class Session {
 
@@ -23,10 +24,10 @@ public class Session {
       this.date = date;
       this.time = time;
       this.price = price;
+      this.classList = new ArrayList<String>();
       totalSessionsCreated++;
    }
 
-   // getters and setters
    public void addUser(String userName) {
       classList.add(userName);
    }
@@ -43,11 +44,11 @@ public class Session {
       return classList.size();
    }
 
-   public String toString(){
+   public String toString() {
       return String.format("ID: %d Name: %s Type: %s Trainer: %s", id, name, type, trainer);
    }
 
-   //getters
+   // getters
    public static int getNumSessions() {
       return totalSessionsCreated;
    }

@@ -24,7 +24,7 @@ public class Gym {
       return new_session;
    }
 
-   public void deleteSession(int i){
+   public void deleteSession(int i) {
       sessions.remove(i);
       indexLastDeletedSessions = i;
    }
@@ -40,6 +40,15 @@ public class Gym {
       indexLastDeletedUsers = i;
    }
 
+   public Session getSession(int id) {
+      for (Session s : sessions) {
+         if (s.getId() == id) {
+            return s;
+         }
+      }
+      return null;
+   }
+
    public List<Session> get_sessions() {
       return sessions;
    }
@@ -48,15 +57,15 @@ public class Gym {
       return users;
    }
 
-   public Session getLastSession(){
-      return sessions.get(sessions.size()-1);
+   public Session getLastSession() {
+      return sessions.get(sessions.size() - 1);
    }
 
    public User getLastUser() {
-      return users.get(users.size()-1);
+      return users.get(users.size() - 1);
    }
 
-   public int getIndexLastDeletedSessions(){
+   public int getIndexLastDeletedSessions() {
       return indexLastDeletedSessions;
    }
 

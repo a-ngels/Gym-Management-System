@@ -33,7 +33,7 @@ public class trainerGUI extends JFrame {
       // add buttons and event listeners to frame
       add_components();
       add_listeners(gym);
-      //window focus listener to update after creating new session
+      // window focus listener to update after creating new session
       this.addWindowFocusListener(new WindowFocusListener() {
          @Override
          public void windowGainedFocus(WindowEvent e) {
@@ -72,7 +72,7 @@ public class trainerGUI extends JFrame {
             new String[] { "ID", "Date", "Time", "Name", "Trainer" });
       sessionsTable = new JTable(sessionsTableModel);
       sessionsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-      //column widths
+      // column widths
       sessionsTable.getColumnModel().getColumn(0).setPreferredWidth(25);
       sessionsTable.getColumnModel().getColumn(1).setPreferredWidth(100);
       sessionsTable.getColumnModel().getColumn(2).setPreferredWidth(75);
@@ -93,7 +93,8 @@ public class trainerGUI extends JFrame {
       Session s = gym.getLastSession();
       System.out.println("updating");
       if (sessionsTable.getRowCount() < gym.get_sessions().size())
-         sessionsTableModel.addRow(new String[] { String.format("%d", s.getId()), s.getDate(), s.getTime(), s.getName(), s.getTrainer() });
+         sessionsTableModel.addRow(
+               new String[] { String.format("%d", s.getId()), s.getDate(), s.getTime(), s.getName(), s.getTrainer() });
       sessionsScrollPane.repaint();
    }
 
@@ -116,6 +117,12 @@ public class trainerGUI extends JFrame {
             gym.deleteSession(sessionsTable.getSelectedRow());
             sessionsTableModel.removeRow(sessionsTable.getSelectedRow());
          }
+      });
+      details_btn.addActionListener(l -> {
+         if (sessionsTable.getSelectedRow() != -1)
+            new detailsGUI(
+                  gym.getSession(
+                        Integer.parseInt((String) sessionsTableModel.getValueAt(sessionsTable.getSelectedRow(), 0))));
       });
    }
 
