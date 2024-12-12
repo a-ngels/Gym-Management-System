@@ -52,7 +52,13 @@ public class searchSessionsGUI extends JFrame {
 
       // Initialize table and scroll pane
       sessionsTableModel = new DefaultTableModel(sessionsToJTable(gym),
-            new String[] { "ID", "Date", "Time", "Name", "Trainer", "Cost" });
+            new String[] { "ID", "Date", "Time", "Name", "Trainer", "Cost" }) {
+         @Override
+         public boolean isCellEditable(int row, int column) {
+            // all cells false
+            return false;
+         }
+      };
       sessionsTable = new JTable(sessionsTableModel);
       sessionsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -64,6 +70,7 @@ public class searchSessionsGUI extends JFrame {
       sessionsTable.getColumnModel().getColumn(4).setPreferredWidth(120);
       sessionsTable.getColumnModel().getColumn(5).setPreferredWidth(25);
 
+      sessionsTable.getTableHeader().setReorderingAllowed(false);
       sessionsScrollPane = new JScrollPane(sessionsTable);
       bottom = new JPanel();
       searchPanel = new JPanel();
