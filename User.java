@@ -6,6 +6,7 @@ public class User {
     private static int totalUsers = 0;
     private static int idGenerator = 0;
     private String first_name, last_name, phone_number, email;
+
     private int id = 0;
 
     private ArrayList<Session> class_list;
@@ -37,6 +38,21 @@ public class User {
         return first_name + " " + last_name;
     }
 
+    public boolean alreadyScheduled(Session session) {
+        for (Session s : class_list) {
+            if (s.getId() == session.getId()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void removeSession(int id) {
+        class_list.removeIf(session -> session.getId() == id);
+    }
+
+
+    //getters and setters
     public String getFirstName() {
         return first_name;
     }
@@ -57,16 +73,19 @@ public class User {
         return id;
     }
 
-    public boolean alreadyScheduled(Session session) {
-        for (Session s : class_list) {
-            if (s.getId() == session.getId()) {
-                return true;
-            }
-        }
-        return false;
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
     }
 
-    public void removeSession(int id) {
-        class_list.removeIf(session -> session.getId() == id);
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
+    }
+
+    public void setPhone_number(String phone_number) {
+        this.phone_number = phone_number;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

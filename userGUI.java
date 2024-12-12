@@ -38,13 +38,13 @@ public class userGUI extends JFrame {
       this.addWindowFocusListener(new WindowFocusListener() {
          @Override
          public void windowGainedFocus(WindowEvent e) {
-            //System.out.println("gained focus");
+            // System.out.println("gained focus");
             refresh(gym);
          }
 
          @Override
          public void windowLostFocus(WindowEvent e) {
-            //System.out.println("lost focus");
+            // System.out.println("lost focus");
          }
       });
 
@@ -96,14 +96,8 @@ public class userGUI extends JFrame {
    }
 
    private void refresh(Gym gym) {
-      try {
-         User u = gym.getLastUser();
-         if (usersTable.getRowCount() < gym.get_users().size()) {
-            usersTableModel.addRow(new String[] { String.format("%d", u.getID()), u.getFirstName(), u.getLastName(),
-                  u.getPhoneNumber(), u.getEmail() });
-         }
-      } catch (Exception e) {
-      }
+      usersTableModel.setDataVector(usersToJTable(gym),
+            new String[] { "Id", "First Name", "Last Name", "Phone Number", "Email" });
       usersScrollPane.repaint();
    }
 
@@ -122,7 +116,7 @@ public class userGUI extends JFrame {
 
    private void add_listeners(Gym gym) {
       back_btn.addActionListener(l -> dispose());
-      create_btn.addActionListener(l -> new create_userGUI(gym));
+      create_btn.addActionListener(l -> new create_userGUI(gym, null));
       delete_btn.addActionListener(l -> {
          if (usersTable.getSelectedRow() != -1) {
             gym.deleteUser(usersTable.getSelectedRow());
@@ -165,6 +159,15 @@ public class userGUI extends JFrame {
             }
          } else {
             JOptionPane.showMessageDialog(this, "Please select a user to search sessions.");
+         }
+      });
+
+      modify_btn.addActionListener(l -> {
+         if (usersTable.getSelectedRow() != -1) {
+            new create_userGUI(gym, gym.getUser(
+                  Integer.parseInt((String) usersTableModel.getValueAt(usersTable.getSelectedRow(), 0))));
+         } else {
+            JOptionPane.showMessageDialog(this, "Please select a user to modify");
          }
       });
    }

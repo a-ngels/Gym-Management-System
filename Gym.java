@@ -47,6 +47,19 @@ public class Gym {
       return -1;
    }
 
+   public int setUser(int id, String fname, String lname, String num, String email) {
+      for (User u : users) {
+         if (u.getID() == id) {
+            u.setFirst_name(fname);
+            u.setLast_name(lname);
+            u.setPhone_number(num);
+            u.setEmail(email);
+            return 0;
+         }
+      }
+      return -1;
+   }
+
    public User createUser(String first_name, String last_name, String phone_number, String email) {
       User new_user = new User(first_name, last_name, phone_number, email);
       users.add(new_user);
@@ -70,6 +83,15 @@ public class Gym {
    public User getUser(String name) {
       for (User u : users) {
          if (u.getName().equals(name)) {
+            return u;
+         }
+      }
+      return null;
+   }
+
+   public User getUser(int id) {
+      for (User u : users) {
+         if (u.getID() == id) {
             return u;
          }
       }

@@ -116,7 +116,6 @@ public class createModifySessionGUI extends JFrame {
       back_btn.addActionListener(l -> dispose());
       if (modify) {
          add_session_btn.addActionListener(l -> {
-
             addSession(gym, name_field.getText(), trainer_field.getText(), (String) type_field.getSelectedItem(),
                   location_field.getText(), date_field.getText(),
                   time_field.getText(), Double.parseDouble(price_field.getText()), s.getId());
@@ -128,7 +127,6 @@ public class createModifySessionGUI extends JFrame {
                   time_field.getText(), Double.parseDouble(price_field.getText()), -1);
          });
       }
-
    }
 
    private void addSession(Gym gym, String name, String trainer, String type, String location, String date, String time,
