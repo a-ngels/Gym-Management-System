@@ -37,13 +37,11 @@ public class trainerGUI extends JFrame {
       this.addWindowFocusListener(new WindowFocusListener() {
          @Override
          public void windowGainedFocus(WindowEvent e) {
-            // System.out.println("gained focus");
             refresh(gym);
          }
 
          @Override
          public void windowLostFocus(WindowEvent e) {
-            // System.out.println("lost focus");
          }
       });
 
@@ -97,14 +95,8 @@ public class trainerGUI extends JFrame {
 
    // update each time a session is added or deleted
    private void refresh(Gym gym) {
-      try {
-         Session s = gym.getLastSession();
-         if (sessionsTable.getRowCount() < gym.get_sessions().size())
-            sessionsTableModel.addRow(
-                  new String[] { String.format("%d", s.getId()), s.getDate(), s.getTime(), s.getName(),
-                        s.getTrainer() });
-      } catch (Exception e) {
-      }
+      sessionsTableModel.setDataVector(sessionsToJTable(gym),
+            new String[] { "ID", "Date", "Time", "Name", "Trainer" });
       sessionsScrollPane.repaint();
    }
 
