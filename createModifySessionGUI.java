@@ -55,14 +55,13 @@ public class createModifySessionGUI extends JFrame {
       back_btn = new JButton("Back");
 
       // init values for testing
-      name_field.setText("cycling with bob");
-      trainer_field.setText("bob");
-      type_field.setSelectedIndex(10);
-      location_field.setText("crunch astor");
-      date_field.setText("11/24/2024");
-      time_field.setText("11:00am");
-      price_field.setText("20");
-      // delete for release
+      // name_field.setText("cycling with bob");
+      // trainer_field.setText("bob");
+      // type_field.setSelectedIndex(10);
+      // location_field.setText("crunch astor");
+      // date_field.setText("11/24/2024");
+      // time_field.setText("11:00am");
+      // price_field.setText("20");
    }
 
    private void modifySettings(Session s) {

@@ -46,11 +46,10 @@ public class create_userGUI extends JFrame {
       back_btn = new JButton("Back");
 
       // values for testing
-      fname_field.setText("bob");
-      lname_field.setText("Smith");
-      phone_field.setText("333");
-      email_field.setText("gmail");
-      // delete for release
+      // fname_field.setText("bob");
+      // lname_field.setText("Smith");
+      // phone_field.setText("333");
+      // email_field.setText("gmail");
    }
 
    private void modifySettings(User u) {
