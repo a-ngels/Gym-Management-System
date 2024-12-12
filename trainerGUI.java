@@ -37,13 +37,13 @@ public class trainerGUI extends JFrame {
       this.addWindowFocusListener(new WindowFocusListener() {
          @Override
          public void windowGainedFocus(WindowEvent e) {
-            System.out.println("gained focus");
+            // System.out.println("gained focus");
             refresh(gym);
          }
 
          @Override
          public void windowLostFocus(WindowEvent e) {
-            System.out.println("lost focus");
+            // System.out.println("lost focus");
          }
       });
 
@@ -99,7 +99,6 @@ public class trainerGUI extends JFrame {
    private void refresh(Gym gym) {
       try {
          Session s = gym.getLastSession();
-         System.out.println("updating");
          if (sessionsTable.getRowCount() < gym.get_sessions().size())
             sessionsTableModel.addRow(
                   new String[] { String.format("%d", s.getId()), s.getDate(), s.getTime(), s.getName(),
@@ -126,7 +125,13 @@ public class trainerGUI extends JFrame {
       create_btn.addActionListener(l -> new createModifySessionGUI(gym, null));
       delete_btn.addActionListener(l -> {
          if (sessionsTable.getSelectedRow() != -1) {
-            gym.deleteSession(sessionsTable.getSelectedRow());
+            int selected_id = Integer
+                  .parseInt((String) sessionsTableModel.getValueAt(sessionsTable.getSelectedRow(), 0));
+            Session temp_session = gym.getSession(selected_id);
+            for (String s : temp_session.getClassList()) {
+               gym.getUser(s).removeSession(selected_id);
+            }
+            gym.deleteSession(selected_id);
             sessionsTableModel.removeRow(sessionsTable.getSelectedRow());
          } else {
             JOptionPane.showMessageDialog(this, "Please select a session to delete");
@@ -144,7 +149,6 @@ public class trainerGUI extends JFrame {
       });
       modify_btn.addActionListener(l -> {
          if (sessionsTable.getSelectedRow() != -1) {
-            System.out.println(sessionsTableModel.getValueAt(sessionsTable.getSelectedRow(), 0).getClass());
             new createModifySessionGUI(gym, gym.getSession(
                   Integer.parseInt((String) sessionsTableModel.getValueAt(sessionsTable.getSelectedRow(), 0))));
          } else {

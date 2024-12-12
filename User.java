@@ -52,6 +52,7 @@ public class User {
     public String getEmail() {
         return email;
     }
+
     public int getID() {
         return id;
     }
@@ -63,5 +64,9 @@ public class User {
             }
         }
         return false;
+    }
+
+    public void removeSession(int id) {
+        class_list.removeIf(session -> session.getId() == id);
     }
 }

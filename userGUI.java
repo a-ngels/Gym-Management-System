@@ -38,13 +38,13 @@ public class userGUI extends JFrame {
       this.addWindowFocusListener(new WindowFocusListener() {
          @Override
          public void windowGainedFocus(WindowEvent e) {
-            System.out.println("gained focus");
+            //System.out.println("gained focus");
             refresh(gym);
          }
 
          @Override
          public void windowLostFocus(WindowEvent e) {
-            System.out.println("lost focus");
+            //System.out.println("lost focus");
          }
       });
 
@@ -141,7 +141,7 @@ public class userGUI extends JFrame {
             for (User u : gym.get_users()) {
                if (u.getID() == userId) {
                   selectedUser = u;
-                  new viewScheduleGUI(selectedUser);
+                  new viewScheduleGUI(selectedUser, gym);
                   break;
                }
             }

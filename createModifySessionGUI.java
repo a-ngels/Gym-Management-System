@@ -21,6 +21,8 @@ public class createModifySessionGUI extends JFrame {
 
       // create buttons for gui
       set_buttons();
+      if (s != null)
+         modifySettings(s);
 
       // set up general information
       setTitle("Add New Session");
@@ -31,9 +33,6 @@ public class createModifySessionGUI extends JFrame {
       // add components and listeners
       add_components();
       add_listeners(gym, s);
-      if (s != null)
-         modifySettings(s);
-
       this.setVisible(true);
    }
 
@@ -117,6 +116,7 @@ public class createModifySessionGUI extends JFrame {
       back_btn.addActionListener(l -> dispose());
       if (modify) {
          add_session_btn.addActionListener(l -> {
+
             addSession(gym, name_field.getText(), trainer_field.getText(), (String) type_field.getSelectedItem(),
                   location_field.getText(), date_field.getText(),
                   time_field.getText(), Double.parseDouble(price_field.getText()), s.getId());
@@ -152,7 +152,6 @@ public class createModifySessionGUI extends JFrame {
             throw new IndexOutOfBoundsException("session not found");
       } else {
          Session temp = gym.createSession(name, trainer, type, location, date, time, price);
-         System.out.println(temp.toString());
       }
       dispose();
    }

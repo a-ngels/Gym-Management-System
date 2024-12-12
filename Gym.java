@@ -41,7 +41,6 @@ public class Gym {
             sessions.get(i).setDate(date);
             sessions.get(i).setTime(time);
             sessions.get(i).setPrice(price);
-            System.out.println(sessions.get(i).toString());
             return 0;
          }
       }
@@ -63,6 +62,15 @@ public class Gym {
       for (Session s : sessions) {
          if (s.getId() == id) {
             return s;
+         }
+      }
+      return null;
+   }
+
+   public User getUser(String name) {
+      for (User u : users) {
+         if (u.getName().equals(name)) {
+            return u;
          }
       }
       return null;

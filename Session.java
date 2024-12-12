@@ -17,13 +17,13 @@ public class Session {
 
    public Session(String name, String type, String trainer, String location, String date, String time, double price) {
       this.id = totalSessionsCreated;
-      this.name = name;
-      this.type = type;
-      this.trainer = trainer;
-      this.location = location;
-      this.date = date;
-      this.time = time;
-      this.price = price;
+      setName(name);
+      setType(type);
+      setTrainer(trainer);
+      setLocation(location);
+      setDate(date);
+      setPrice(price);
+      setTime(time);
       this.classList = new ArrayList<String>();
       totalSessionsCreated++;
    }
@@ -89,31 +89,31 @@ public class Session {
       return classList;
    }
 
-   public void setName(String name) {
-      this.name = name;
+   public void setName(String n) {
+      this.name = n;
    }
 
-   public void setType(String type) {
-      this.type = type;
+   public void setType(String t) {
+      this.type = t;
    }
 
-   public void setTrainer(String trainer) {
-      this.trainer = trainer;
+   public void setTrainer(String tr) {
+      this.trainer = tr;
    }
 
-   public void setLocation(String location) {
-      this.location = location;
+   public void setLocation(String l) {
+      this.location = l;
    }
 
-   public void setDate(String date) {
-      this.date = date;
+   public void setDate(String d) {
+      this.date = d;
    }
 
-   public void setTime(String time) {
-      this.time = time;
+   public void setTime(String t) {
+      this.time = t;
    }
 
-   public void setPrice(double price) {
-      this.price = price;
+   public void setPrice(double p) {
+      this.price = p;
    }
 }

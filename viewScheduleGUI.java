@@ -14,7 +14,7 @@ public class viewScheduleGUI extends JFrame {
       private JPanel bottom;
       private JSplitPane main;
 
-   public viewScheduleGUI(User user) {
+   public viewScheduleGUI(User user, Gym gym) {
 
       // create components and adjust sizes for gui
       set_components(user);
@@ -27,7 +27,7 @@ public class viewScheduleGUI extends JFrame {
 
       // add components and listeners
       add_components();
-      add_listeners(user);
+      add_listeners(user, gym);
       
       this.setVisible(true);
    }
@@ -69,7 +69,7 @@ public class viewScheduleGUI extends JFrame {
       main.setEnabled(false);
    }
    
-   private void add_listeners(User user) {
+   private void add_listeners(User user, Gym gym) {
       back_btn.addActionListener(e -> dispose());
       delete_btn.addActionListener(l -> {
 
@@ -77,6 +77,7 @@ public class viewScheduleGUI extends JFrame {
          if (selectedRow != -1) {
             int sessionId = Integer.parseInt((String) sessionsTable.getValueAt(selectedRow, 0));
             user.getClassList().removeIf(session -> session.getId() == sessionId);
+            gym.getSession(sessionId).removeUser(user.getName());
             sessionsTableModel.removeRow(selectedRow);
             refresh(user);
          } else {

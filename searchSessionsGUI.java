@@ -110,6 +110,7 @@ public class searchSessionsGUI extends JFrame {
                      JOptionPane.showMessageDialog(this, "Session already added to schedule!");
                   } else {
                      user.addToList(s);
+                     s.addUser(user.getName());
                      JOptionPane.showMessageDialog(this, "Session added successfully!");
                   }
                   return;
